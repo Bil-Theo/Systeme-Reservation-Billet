@@ -75,10 +75,6 @@ public class Signup extends HttpServlet {
 						HttpSession session = request.getSession();
 						session.setAttribute("user", new Utilisateur(result.getString("_id"), nom, prenom, email, password, "client"));
 						
-						result.close();
-						connection.close();
-						statement.close();
-						
 						response.sendRedirect("Customer.jsp");
 						
 						

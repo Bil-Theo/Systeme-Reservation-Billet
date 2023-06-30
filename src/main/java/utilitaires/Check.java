@@ -1,5 +1,7 @@
 package utilitaires;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,5 +22,18 @@ public class Check {
 	        Matcher matcher = pattern.matcher(password);
 	        return matcher.matches();
 	}
+	public static void main(String[] argv) {
+		String d1 = "2023-06-15";
+        String d2 = "2023-06-25";
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date1 = LocalDate.parse(d1, formatter);
+        LocalDate date2 = LocalDate.parse(d2, formatter);
+
+        if (date1.isAfter(date2) || date1.isEqual(date2)) {
+            System.out.println("d1 est supérieure ou égale à d2");
+        } else {
+            System.out.println("d1 est inférieure à d2");
+        }
+	}
 }

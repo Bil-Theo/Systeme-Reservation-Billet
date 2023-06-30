@@ -19,11 +19,22 @@
   <body style="background: -webkit-radial-gradient(rgb(136, 15, 159), rgb(6, 19, 31));  background: radial-gradient(rgb(136, 15, 159), rgb(6, 19, 31)); background:url('./assets/img/login.png');height:100%; min-height:100%;margin:0;padding:0;">  
 
 
-            <jsp:include page="./Templates/AdminHeader.jsp"/>
+            <jsp:include page="./Templates/Header.jsp"/>
 		 
 
 
   
+  		<%
+  			Cookie[] cookies =  request.getCookies();
+  			if(cookies!=null){
+  				for(Cookie cookie: cookies){
+  					if(cookie.getName().equals("_id")){
+  						cookie.setMaxAge(0);
+  						response.addCookie(cookie); break;
+  					}
+  				}
+  			}
+  		%>
         <!-- Top content -->
         
         <%String message = (String) request.getAttribute("alert");%>
@@ -60,7 +71,7 @@
 				                        <button style="margin-top:5%;" type="submit" class="btn">Connexion</button>
 				                    </form>
 				                    <div>
-				                    	<span>Vous avez pas un compte? Alors cliquez sur <a href="signup.jsp">s'inscrire</a></span>
+				                    	<span>Vous avez pas un compte? Alors cliquez sur <a href="Signup.jsp">s'inscrire</a></span>
 				                    </div>
 			                    </div>
 		                    </div>		            

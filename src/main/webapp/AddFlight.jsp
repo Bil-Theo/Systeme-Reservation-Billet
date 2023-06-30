@@ -5,7 +5,7 @@
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Book Flight</title>
+        <title>Add Flight</title>
 		
 		<link rel="icon" href="./assets/img/teteLogo.png">
 
@@ -15,14 +15,28 @@
         <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
 		<link rel="stylesheet" href="assets/css/form-elements.css">
         <link rel="stylesheet" href="assets/css/style.css">
+       	<jsp:include page="Templates/HeadMetaInfo.jsp"/>
 		
     </head>
 	
-	
+	<%		boolean acces = false;
+			Cookie[] cookies = request.getCookies();
+			for(Cookie cookie: cookies){
+				if(cookie.getName().equals("_id")){
+					acces=true; break;
+				}
+			}
+			
+		if(!acces){
+		   RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+       	request.setAttribute("alert", "You do not have the rights to access this page. Please authenticate first");  
+       	rd.forward(request, response);
+	   }
+	%>
 
-  <body style="background: -webkit-radial-gradient(rgb(136, 15, 159), rgb(6, 19, 31));  background: radial-gradient(rgb(136, 15, 159), rgb(6, 19, 31)); background:url('./assets/img/main.jpg');">  
-
-      <jsp:include page="Templates/CustomerHeader.jsp"/>
+  <body style="background: -webkit-radial-gradient(rgb(136, 15, 159), rgb(6, 19, 31));  background: radial-gradient(rgb(136, 15, 159), rgb(6, 19, 31)); background:url('./assets/img/itinerary.jpg');">  
+	  <jsp:include page="Templates/AdminPanel.jsp"/>	
+      <jsp:include page="Templates/AdminPanel.jsp"/>
       
       <% 
       		String message =(String) request.getAttribute("alert");
@@ -100,7 +114,15 @@
       
 
                 <!-- Top content -->
-        <div class="top-content">
+                
+                <% 
+                	String alert = (String) request.getAttribute("alert");
+                	if(alert !=null){
+                            %>
+                            			<span class = "alert alert-danger" role="alert" style ="margin: 30%;"> <%= alert%></span>
+                            		<%} %>
+                
+        <div class="top-content" >
             <div class="inner-bg" style="padding:0px 0px 80px 0;">
                 <div class="container">
                     <div class="row" style="margin-left:17%; margin-right:17%;">
@@ -116,9 +138,13 @@
 	                        		</div>
 	                            </div>
 	                            <div class="form-bottom" style="color:white;">
-				                    <form role="form" action="Booking.jsp" method="get" class="flight-search-form">
+				                    <form role="form" action="addflight" method="post" class="flight-search-form">
                                                         
-                                                        <div class="row">                                                            
+                                      <div class="row">  
+                                      <div class="form-group col-lg-4">
+				                    		<label for="depart">Name Flight</label>
+				                        	<input required type="text" name="nameFlight" class="form-control" placeholder="fk-wxyz" style = "height: 50px;    margin: 0;    padding: 0 20px;    vertical-align: middle;    background: #fff;    border: 3px solid #fff;    font-family: 'Roboto', sans-serif;    font-size: 16px;    font-weight: 300;    line-height: 50px;    color: #888;    -moz-border-radius: 4px;    -webkit-border-radius: 4px;    border-radius: 4px;    -moz-box-shadow: none;    -webkit-box-shadow: none;    box-shadow: none;    -o-transition: all .3s;    -moz-transition: all .3s;    -webkit-transition: all .3s;    -ms-transition: all .3s;    transition: all .3s;">											
+				                        </div>                                                          
 				                    	<div class="form-group col-lg-4 ui-widget">
 				                    		<label for="from">From</label>
                             					<select class="form-control form-select" name="departure" required>
@@ -142,30 +168,37 @@
                                 					<option value="<%= city %>" style = "height: 50px;    margin: 0;    padding: 0 20px;    vertical-align: middle;    background: #fff;    border: 3px solid #fff;    font-family: 'Roboto', sans-serif;    font-size: 16px;    font-weight: 300;    line-height: 50px;    color: #888;    -moz-border-radius: 4px;    -webkit-border-radius: 4px;    border-radius: 4px;    -moz-box-shadow: none;    -webkit-box-shadow: none;    box-shadow: none;    -o-transition: all .3s;    -moz-transition: all .3s;    -webkit-transition: all .3s;    -ms-transition: all .3s;    transition: all .3s;"> <%= city %> </option>
                                 				<%} %>
                             					</select>
-				                        	</div>
+				                        </div>
+				                     </div>
+				                     <div class="row">
 				                    	<div class="form-group col-lg-4">
 				                    		<label for="depart">Departure Date</label>
 				                        	<input required type="date" name="departDate" class="form-control" id="form-depart" style = "height: 50px;    margin: 0;    padding: 0 20px;    vertical-align: middle;    background: #fff;    border: 3px solid #fff;    font-family: 'Roboto', sans-serif;    font-size: 16px;    font-weight: 300;    line-height: 50px;    color: #888;    -moz-border-radius: 4px;    -webkit-border-radius: 4px;    border-radius: 4px;    -moz-box-shadow: none;    -webkit-box-shadow: none;    box-shadow: none;    -o-transition: all .3s;    -moz-transition: all .3s;    -webkit-transition: all .3s;    -ms-transition: all .3s;    transition: all .3s;">											
 				                        </div>
+				                        <div class="form-group col-lg-4">
+				                    		<label for="depart">Arrival Date</label>
+				                        	<input required type="date" name="arriveDate" class="form-control" id="form-depart" style = "height: 50px;    margin: 0;    padding: 0 20px;    vertical-align: middle;    background: #fff;    border: 3px solid #fff;    font-family: 'Roboto', sans-serif;    font-size: 16px;    font-weight: 300;    line-height: 50px;    color: #888;    -moz-border-radius: 4px;    -webkit-border-radius: 4px;    border-radius: 4px;    -moz-box-shadow: none;    -webkit-box-shadow: none;    box-shadow: none;    -o-transition: all .3s;    -moz-transition: all .3s;    -webkit-transition: all .3s;    -ms-transition: all .3s;    transition: all .3s;">											
+				                        </div>
 									</div>
 									
 									<div class="row">
-				                    	<div class="form-group col-lg-4">
-				                    		<label for="class">Class</label>
-				                        	<select required name="class" class="form-control" id="form-class" style = "height: 50px;    margin: 0;    padding: 0 20px;    vertical-align: middle;    background: #fff;    border: 3px solid #fff;    font-family: 'Roboto', sans-serif;    font-size: 16px;    font-weight: 300;    line-height: 50px;    color: #888;    -moz-border-radius: 4px;    -webkit-border-radius: 4px;    border-radius: 4px;    -moz-box-shadow: none;    -webkit-box-shadow: none;    box-shadow: none;    -o-transition: all .3s;    -moz-transition: all .3s;    -webkit-transition: all .3s;    -ms-transition: all .3s;    transition: all .3s;">
-											<option value="Economy" style = "height: 50px;    margin: 0;    padding: 0 20px;    vertical-align: middle;    background: #fff;    border: 3px solid #fff;    font-family: 'Roboto', sans-serif;    font-size: 16px;    font-weight: 300;    line-height: 50px;    color: #888;    -moz-border-radius: 4px;    -webkit-border-radius: 4px;    border-radius: 4px;    -moz-box-shadow: none;    -webkit-box-shadow: none;    box-shadow: none;    -o-transition: all .3s;    -moz-transition: all .3s;    -webkit-transition: all .3s;    -ms-transition: all .3s;    transition: all .3s;"> Economy</option>
-											<option value="Business" style = "height: 50px;    margin: 0;    padding: 0 20px;    vertical-align: middle;    background: #fff;    border: 3px solid #fff;    font-family: 'Roboto', sans-serif;    font-size: 16px;    font-weight: 300;    line-height: 50px;    color: #888;    -moz-border-radius: 4px;    -webkit-border-radius: 4px;    border-radius: 4px;    -moz-box-shadow: none;    -webkit-box-shadow: none;    box-shadow: none;    -o-transition: all .3s;    -moz-transition: all .3s;    -webkit-transition: all .3s;    -ms-transition: all .3s;    transition: all .3s;"> Business</option>
-											<option value="First Class" style = "height: 50px;    margin: 0;    padding: 0 20px;    vertical-align: middle;    background: #fff;    border: 3px solid #fff;    font-family: 'Roboto', sans-serif;    font-size: 16px;    font-weight: 300;    line-height: 50px;    color: #888;    -moz-border-radius: 4px;    -webkit-border-radius: 4px;    border-radius: 4px;    -moz-box-shadow: none;    -webkit-box-shadow: none;    box-shadow: none;    -o-transition: all .3s;    -moz-transition: all .3s;    -webkit-transition: all .3s;    -ms-transition: all .3s;    transition: all .3s;"> First Class</option>
-											</select>
+				                    	
+				                        <div class="form-group col-lg-4">
+				                        	<label for="people">Economy</label>
+				                        	<input required type="number" min="1" max="60" placeholder="Number of People.." name="seatsEco" class="form-control" id="form-adults" style = "height: 50px;    margin: 0;    padding: 0 20px;    vertical-align: middle;    background: #fff;    border: 3px solid #fff;    font-family: 'Roboto', sans-serif;    font-size: 16px;    font-weight: 300;    line-height: 50px;    color: #888;    -moz-border-radius: 4px;    -webkit-border-radius: 4px;    border-radius: 4px;    -moz-box-shadow: none;    -webkit-box-shadow: none;    box-shadow: none;    -o-transition: all .3s;    -moz-transition: all .3s;    -webkit-transition: all .3s;    -ms-transition: all .3s;    transition: all .3s;">
 				                        </div>
 				                        <div class="form-group col-lg-4">
-				                        	<label for="people">No. of People</label>
-				                        	<input required type="number" min="1" max="4" placeholder="Number of People.." name="seats" class="form-control" id="form-adults" style = "height: 50px;    margin: 0;    padding: 0 20px;    vertical-align: middle;    background: #fff;    border: 3px solid #fff;    font-family: 'Roboto', sans-serif;    font-size: 16px;    font-weight: 300;    line-height: 50px;    color: #888;    -moz-border-radius: 4px;    -webkit-border-radius: 4px;    border-radius: 4px;    -moz-box-shadow: none;    -webkit-box-shadow: none;    box-shadow: none;    -o-transition: all .3s;    -moz-transition: all .3s;    -webkit-transition: all .3s;    -ms-transition: all .3s;    transition: all .3s;">
+				                        	<label for="people">Business</label>
+				                        	<input required type="number" min="1" max="60" placeholder="Number of People.." name="seatsBuz" class="form-control" id="form-adults" style = "height: 50px;    margin: 0;    padding: 0 20px;    vertical-align: middle;    background: #fff;    border: 3px solid #fff;    font-family: 'Roboto', sans-serif;    font-size: 16px;    font-weight: 300;    line-height: 50px;    color: #888;    -moz-border-radius: 4px;    -webkit-border-radius: 4px;    border-radius: 4px;    -moz-box-shadow: none;    -webkit-box-shadow: none;    box-shadow: none;    -o-transition: all .3s;    -moz-transition: all .3s;    -webkit-transition: all .3s;    -ms-transition: all .3s;    transition: all .3s;">
+				                        </div>
+				                        <div class="form-group col-lg-4">
+				                        	<label for="people">First Class</label>
+				                        	<input required type="number" min="0" max="60" placeholder="Number of People.." name="seatsFclass" class="form-control" id="form-adults" style = "height: 50px;    margin: 0;    padding: 0 20px;    vertical-align: middle;    background: #fff;    border: 3px solid #fff;    font-family: 'Roboto', sans-serif;    font-size: 16px;    font-weight: 300;    line-height: 50px;    color: #888;    -moz-border-radius: 4px;    -webkit-border-radius: 4px;    border-radius: 4px;    -moz-box-shadow: none;    -webkit-box-shadow: none;    box-shadow: none;    -o-transition: all .3s;    -moz-transition: all .3s;    -webkit-transition: all .3s;    -ms-transition: all .3s;    transition: all .3s;">
 				                        </div>
 
                                      </div>
 										<div style="text-align:center;">
-											<button style="margin-top:5%;" type="submit"  class="btn col-xs-5 col-md-5">Search Flights</button>
+											<button style="margin-top:5%;" type="submit"  class="btn col-xs-5 col-md-5">Add Flight</button>
 										</div>
 									</form>
 			                    </div>

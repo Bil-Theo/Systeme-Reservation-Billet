@@ -61,8 +61,6 @@ public class Login extends HttpServlet {
 					statement.setString(2, password);
 					ResultSet result = statement.executeQuery();
 					
-					connection.close();
-					statement.close();
 					
 					if(result.next()) {
 						
