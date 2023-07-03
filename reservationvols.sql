@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Ven 30 Juin 2023 à 15:08
+-- Généré le :  Lun 03 Juillet 2023 à 12:56
 -- Version du serveur :  5.7.11
 -- Version de PHP :  5.6.18
 
@@ -85,7 +85,10 @@ INSERT INTO `reservation` (`_id`, `seats`, `class`, `_idVol`, `_idClient`) VALUE
 (4, 2, 'First Class', 5, 2),
 (7, 1, 'Economy', 4, 3),
 (12, 3, 'Economy', 5, 3),
-(18, 3, 'Economy', 10, 3);
+(18, 3, 'Economy', 10, 3),
+(19, 1, 'Economy', 4, 3),
+(20, 1, 'Economy', 4, 4),
+(21, 2, 'Economy', 12, 2);
 
 -- --------------------------------------------------------
 
@@ -109,7 +112,8 @@ CREATE TABLE `utilisateur` (
 INSERT INTO `utilisateur` (`_id`, `nom`, `prenom`, `email`, `motpass`, `type`) VALUES
 (1, 'ITOUA', 'Bil Theo', 'biltheoitoua@hotmail.com', '12345', 'admin'),
 (2, 'NGalomi', 'Bts', 'biltheoitoua@gmail.com', '12345N', 'customer'),
-(3, 'Mahamat', 'saleh', 'salehindev@gmail.com', '12345', 'customer');
+(3, 'Mahamat', 'saleh', 'salehindev@gmail.com', '12345', 'customer'),
+(4, 'Mahamat iss', 'sale', 'salehindev@salehindev.com', 'aaaa', 'customer');
 
 -- --------------------------------------------------------
 
@@ -134,12 +138,12 @@ CREATE TABLE `vol` (
 --
 
 INSERT INTO `vol` (`_id`, `volNom`, `villeDep`, `villeArr`, `dateDep`, `dateArr`, `nbrEco`, `nbrBuz`, `nbr1ereClasse`) VALUES
-(2, 'fk-0023', 'Brazzaville', 'Alger', '2023-06-18', '2023-06-19', 5, 10, 4),
-(3, 'fk-133', 'Kinshasa', 'Moscow', '2023-02-01', '2023-06-03', -3, 15, 4),
-(4, 'fk-02673', 'Alger', 'Lyon', '2023-08-18', '2023-06-19', 22, 20, 4),
-(5, 'fk-1810', 'Paris', 'Oran', '2023-12-25', '2023-12-25', 6, 20, 4),
-(7, 'fk-009', 'Tokyo', 'Lyon', '2023-06-30', '2023-07-02', 21, 15, 5),
-(10, 'fk-47567', 'Alger', 'Ndjamena', '2023-06-30', '2023-06-30', 21, 15, 10);
+(2, 'fk-0023', 'Shanghai', 'Lyon', '2023-06-18', '2023-06-21', -1, 10, 3),
+(3, 'fk-133', 'Kinshasa', 'Moscow', '2023-02-01', '2023-06-03', -9, 15, 4),
+(4, 'fk-02673', 'Alger', 'Lyon', '2023-08-18', '2023-06-19', 16, 20, 4),
+(5, 'fk-1810', 'Paris', 'Oran', '2023-12-25', '2023-12-25', 0, 20, 4),
+(7, 'fk-009', 'Tokyo', 'Lyon', '2023-06-30', '2023-07-02', 15, 15, 5),
+(10, 'fk-47567', 'Alger', 'Ndjamena', '2023-06-30', '2023-06-30', 15, 15, 10);
 
 --
 -- Index pour les tables exportées
@@ -149,9 +153,7 @@ INSERT INTO `vol` (`_id`, `volNom`, `villeDep`, `villeArr`, `dateDep`, `dateArr`
 -- Index pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  ADD PRIMARY KEY (`_id`),
-  ADD KEY `_idVol` (`_idVol`),
-  ADD KEY `_idClient` (`_idClient`);
+  ADD PRIMARY KEY (`_id`);
 
 --
 -- Index pour la table `utilisateur`
@@ -174,28 +176,17 @@ ALTER TABLE `vol`
 -- AUTO_INCREMENT pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pour la table `vol`
 --
 ALTER TABLE `vol`
-  MODIFY `_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
---
--- Contraintes pour les tables exportées
---
-
---
--- Contraintes pour la table `reservation`
---
-ALTER TABLE `reservation`
-  ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`_idVol`) REFERENCES `vol` (`_id`),
-  ADD CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`_idClient`) REFERENCES `utilisateur` (`_id`);
-
+  MODIFY `_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
